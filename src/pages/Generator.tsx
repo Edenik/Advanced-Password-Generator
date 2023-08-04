@@ -2,8 +2,7 @@ import { useCallback, useState } from 'react';
 import PasswordGeneratorForm, { FormData } from '../components/Form';
 import PasswordStrengthMeter from '../components/PasswordStrangeMeter';
 import EnhancedTable from '../components/Table';
-import { FieldsSchema, getFieldValues } from '../services/FieldsMaker';
-import { calculateUniqueObjects, generateObjects } from '../services/Maker';
+import { FieldsSchema, calculateUniqueObjects, generateObjects, getFieldValues } from '../services/FieldsMaker';
 import PasswordGenerator from '../services/PasswordGenerator';
 import { Column, Data, sleep } from '../utils/utils';
 

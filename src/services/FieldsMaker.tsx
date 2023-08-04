@@ -1,3 +1,5 @@
+import { Dictionary } from "../utils/interfaces";
+
 export type FieldSchema =
     | { type: 'string'; exclude_values?: string[] }
     | { type: 'number'; min?: number; max?: number; exclude_values?: number[] }
@@ -109,33 +111,67 @@ export function getFieldValues(fields: FieldsSchema): { [key: string]: any } {
     return values;
 }
 
-export const fields: FieldsSchema = {
-    name: { type: 'string', exclude_values: ['John', 'Jane'] },
-    age: { type: 'number', min: 18, max: 65, exclude_values: [30, 40] },
-    graduated: { type: 'boolean', exclude_values: [false] },
-    role: { type: 'enum', enum: ['admin', 'manager', 'user'], exclude_values: ['user'] },
-    joinDate: { type: 'date', startDate: new Date('2023-01-01'), endDate: new Date('2023-01-10'), exclude_values: [new Date('2023-01-05')] },
-    customField: { type: 'custom', values: [100, 'customValue', true] },
-    contactInfo: {
-        type: 'object',
-        properties: {
-            email: { type: 'string' },
-            phone: { type: 'string', exclude_values: ['555-1234'] },
-        },
-    },
-    interests: { type: 'array', itemSchema: { type: 'string' } },
-    userType: {
-        type: 'oneOf',
-        oneOf: [
-            { type: 'string', exclude_values: ['guest'] },
-            { type: 'enum', enum: ['user', 'admin'] },
-        ],
-    },
-    multipleFields: {
-        type: 'allOf',
-        allOf: [
-            { type: 'string' },
-            { type: 'enum', enum: ['A', 'B', 'C'] },
-        ],
-    },
-};
+
+export interface GeneratedObject {
+    [key: string]: any;
+}
+
+export function randomChoice<T>(values: T[]): T {
+    return values[Math.floor(Math.random() * values.length)];
+}
+// Define the types for better type safety
+type OptionValues = string[] | number[] | boolean[]; // Add more types as needed
+type Options = Record<string, OptionValues>;
+
+
+
+export function generateObjects(
+  options: Options,
+  numObjects: number,
+  unique: boolean = false,
+  amountPerObject: number = 1,
+): GeneratedObject[] {
+  const generated: GeneratedObject[] = [];
+  const generatedSet: Set<string> = new Set();
+
+  // Helper function to check object uniqueness
+  const isObjectUnique = (obj: GeneratedObject): boolean => {
+    const objString = Object.entries(obj)
+      .map(([key, value]) => `${key}:${value}`)
+      .join(',');
+    return !generatedSet.has(objString);
+  };
+
+  while (generated.length < (numObjects * amountPerObject)) {
+    const obj: GeneratedObject = {};
+    for (const prop in options) {
+      if (options.hasOwnProperty(prop)) {
+        const values = options[prop];
+        const randomIndex = Math.floor(Math.random() * values.length);
+        obj[prop] = values[randomIndex];
+      }
+    }
+
+    for (let i = 0; i < amountPerObject; i++) {
+      if (unique) {
+        if (isObjectUnique(obj)) {
+          generated.push(obj);
+          generatedSet.add(Object.entries(obj).map(([key, value]) => `${key}:${value}`).join(','));
+        }
+      } else {
+        generated.push(obj);
+      }
+    }
+  }
+
+  return generated;
+}
+export function calculateUniqueObjects(options: Dictionary<any[]>): number {
+    let combinations: any[] = [[]];
+    for (const values of Object.values(options)) {
+        combinations = combinations.flatMap((combo) => values.map((value) => [...combo, value]));
+    }
+
+    const uniqueObjects = new Set(combinations.map((combo) => JSON.stringify(combo))); // Explicitly specify the type for the parameter.
+    return uniqueObjects.size;
+}

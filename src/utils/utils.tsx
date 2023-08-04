@@ -1,5 +1,5 @@
-import { Dictionary } from "../services/Maker";
 import { ScoreResult } from "../services/PasswordGenerator";
+import { Dictionary } from "./interfaces";
 
 export type Order = 'asc' | 'desc';
 

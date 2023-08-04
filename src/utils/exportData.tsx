@@ -1,5 +1,5 @@
-import { Dictionary } from "../services/Maker";
 import { createPasswordLabel } from "./common";
+import { Dictionary } from "./interfaces";
 import { Data, getFormattedDateForFileName } from "./utils";
 
 interface TextTableColumn {
