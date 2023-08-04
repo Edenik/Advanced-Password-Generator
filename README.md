@@ -6,7 +6,6 @@
 This password generator app does not save any data over the internet nor requires any internet connection during its operation.
 
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
@@ -48,5 +47,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 To learn React, check out the [React documentation](https://reactjs.org/).

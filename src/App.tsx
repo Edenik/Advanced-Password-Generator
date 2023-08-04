@@ -1,4 +1,3 @@
-import './App.css';
 import Generator from './pages/Generator';
 
 function App() {
