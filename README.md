@@ -1,4 +1,5 @@
-# Getting Started with Create React App
+# Advanced Password Generator
+[Live Demo](https://Edenik.github.io/Advanced-Password-Generator).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
