@@ -1,5 +1,10 @@
 # Advanced Password Generator
-[Live Demo](https://Edenik.github.io/Advanced-Password-Generator).
+## Live Demo
+[Click Here](https://Edenik.github.io/Advanced-Password-Generator)
+
+## Disclaimer 
+This password generator app does not save any data over the internet nor requires any internet connection during its operation.
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
