@@ -1,6 +1,6 @@
 import { Dictionary } from "../services/Maker";
 import { createPasswordLabel } from "./common";
-import { Data } from "./utils";
+import { Data, getFormattedDateForFileName } from "./utils";
 
 interface TextTableColumn {
     header: string;
@@ -57,20 +57,9 @@ function padText(text: string, width: number, paddingSize: number, alignment: 'l
     }
 }
 
-function escapeAndWrapDoubleQuotes(value: string): string {
-    // If the value contains double quotes, escape them by doubling them and then wrap the whole value in double quotes.
-    if (value.includes('"')) {
-      return `"${value.replace(/"/g, '""')}"`;
-    }
-    // If the value does not contain double quotes, return it as is.
-    return value;
-  }
-  
-
 type FileFormat = "json" | "txt";
 
-
-const mapData = (data: Data[]) => {
+const mapData = (data: Data[]) : Dictionary<string>[]=> {
     return data.map((row) => {
         return {
             password: row.password,
@@ -84,9 +73,10 @@ const mapData = (data: Data[]) => {
             numbers: row.values.numbers.toString(),
             symbols: row.values.symbols.toString(),
         }
-    }) as Dictionary<string>[];
+    })
 }
-export function exportData(data: Data[], format: FileFormat) {
+
+export const exportData = (data: Data[], format: FileFormat): void => {
     let fileData: string;
     let fileName: string;
     let mimeType: string;
@@ -94,12 +84,12 @@ export function exportData(data: Data[], format: FileFormat) {
     switch (format) {
         case "json":
             fileData = JSON.stringify(data);
-            fileName = "data.json";
+            fileName = `Passwords_${getFormattedDateForFileName()}.json`;
             mimeType = "application/json";
             break;
         case "txt":
             fileData = drawTable(columns, mapData(data));
-            fileName = "data.txt";
+            fileName = `Passwords_${getFormattedDateForFileName()}.txt`;
             mimeType = "text/plain";
             break;
         default:
